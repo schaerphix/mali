@@ -4,7 +4,7 @@
 #
 #**********************************************************************
 #
-#  Autor:    Philippe Schär
+#  Autor:    schaerphix
 #  Date:     02.12.2022
 #  Revision: V1.3
 #
@@ -37,7 +37,7 @@ class MainWin ():
         self.red = '#b13e53'
         
         self.mainTitle = "Mali"
-        self.picturePath = ""
+        self.picturePath = ""                               # Insert Path to store the Picture
         self.w = self.win.winfo_screenwidth()
         self.h = self.win.winfo_screenheight()
         self.winSizeMain = str(self.w) + "x" + str(self.h)
@@ -62,7 +62,7 @@ class MainWin ():
         self.win.title(self.mainTitle)
         self.winBg = self.win.tk_setPalette(self.bg)
         self.win.overrideredirect(True)
-        self.win.iconphoto(False, PhotoImage(file='/usr/local/src/mali/mali.png'))
+        self.win.iconphoto(False, PhotoImage(file='mali.png'))
         
         self.CreatCanvas(self.win,self.w-120,self.h-100,self.white,5,5)
         self.CreatColorButton()
