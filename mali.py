@@ -45,18 +45,18 @@ class MainWin ():
         self.winBg = None
         self.widthBu = 3
         
-        self.butBrei = 20
-        self.deltaX = 43 
-        self.actXpos = ((self.w-(20*self.butBrei)-(19*self.deltaX))/2)+10 #75
+        self.COLORS = ["#1a1c2c","#5d275d","#b13e53","#ef7d57","#ffcd75",
+        "#a7f070","#38b764","#257179","#29366f","#3b5dc9","#41a6f6","#73eff7",
+        "#f4f4f4","#94b0c2","#566c86","#333c57"]
+        
+        self.butWith = 20
+        self.deltaX = (self.w - (self.butWith * len(self.COLORS))) / (len(self.COLORS) + 1) 
+        self.actXpos =  self.deltaX
         
         self.penColor = "#ffffff"
         self.caMain = None
         
-        self.COLORS = ["#1a1c2c","#5d275d","#b13e53","#ef7d57","#ffcd75",
-        "#a7f070","#38b764","#257179","#29366f","#3b5dc9","#41a6f6","#73eff7",
-        "#f4f4f4","#94b0c2","#566c86","#333c57"]
-
-
+    
     def CreatGui(self):
         self.win.geometry(self.winSizeMain)
         self.win.title(self.mainTitle)
@@ -64,10 +64,10 @@ class MainWin ():
         self.win.overrideredirect(True)
         self.win.iconphoto(False, PhotoImage(file='mali.png'))
         
-        self.CreatCanvas(self.win,self.w-120,self.h-100,self.white,5,5)
+        self.CreatCanvas(self.win,self.w-80,self.h-150,self.white,10,65)
         self.CreatColorButton()
-        self.CreatSaveButton(self.win,self.white,self.w-80, 100)
-        self.CreatCloseButton(self.win,self.red,self.w-80, 10)
+        self.CreatSaveButton(self.win,self.white,10, 10)
+        self.CreatCloseButton(self.win,self.red,self.w-60, 10)
         return self.win
         
     def CreatCanvas (self,rot,w,h,col,px,py):
@@ -78,7 +78,7 @@ class MainWin ():
     def CreatColorButton(self):
         for c in self.COLORS:
             self.CreatPaletteButton(self.win,c,self.actXpos,self.h-75)
-            self.actXpos = self.actXpos + self.deltaX + self.butBrei
+            self.actXpos = self.actXpos + self.deltaX + self.butWith
 
     def Paint(self,event):
         # get x1, y1, x2, y2 co-ordinates
