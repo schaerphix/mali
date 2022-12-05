@@ -18,7 +18,9 @@
 
 from tkinter import*
 from tkinter import Button
-from PIL import Image
+import tkinter as tk
+from tkinter import filedialog as fd
+from PIL import Image, ImageTk
 import io
 import datetime
 
@@ -39,7 +41,9 @@ class MainWin ():
         self.mainTitle = "Mali"
         self.picturePath = ""                               # Insert Path to store the Picture
         self.w = self.win.winfo_screenwidth()
-        self.h = self.win.winfo_screenheight()
+        self.h = self.win.winfo_screenheight() 
+        self.wDiff = 80
+        self.hDiff = 150
         self.winSizeMain = str(self.w) + "x" + str(self.h)
         self.bg = self.gray
         self.winBg = None
@@ -51,7 +55,7 @@ class MainWin ():
         
         self.butWith = 20
         self.deltaX = (self.w - (self.butWith * len(self.COLORS))) / (len(self.COLORS) + 1) 
-        self.actXpos =  self.deltaX
+        self.actXpos =  self.deltaX / 2
         
         self.penColor = "#ffffff"
         self.caMain = None
@@ -64,9 +68,11 @@ class MainWin ():
         self.win.overrideredirect(True)
         self.win.iconphoto(False, PhotoImage(file='mali.png'))
         
-        self.CreatCanvas(self.win,self.w-80,self.h-150,self.white,10,65)
+        self.CreatCanvas(self.win,self.w-self.wDiff,self.h-self.hDiff,self.white,10,65)
         self.CreatColorButton()
-        self.CreatSaveButton(self.win,self.white,10, 10)
+        self.CreatNewButton(self.win,self.white,10, 10)
+        self.CreatSaveButton(self.win,self.white,160, 10)
+        self.CreatLoadButton(self.win,self.white,310, 10)
         self.CreatCloseButton(self.win,self.red,self.w-60, 10)
         return self.win
         
@@ -97,6 +103,30 @@ class MainWin ():
     def SetPenColor(self,colo):
         self.penColor = colo
         
+    def CreatNewButton(self,rot,col,px,py):
+        but = Button(rot, bg=col, text =" ", width=self.widthBu, height=2,relief = "flat")                  
+        but ["command"] = self.new
+        but.place(x=px,y=py)
+        
+    def new(self):
+        self.save()
+        self.ca.destroy()
+        self.CreatCanvas(self.win,self.w-self.wDiff,self.h-self.hDiff,self.white,10,65)
+        
+    def CreatLoadButton(self,rot,col,px,py):
+        but = Button(rot, bg=col, text ="[->", width=self.widthBu, height=2,relief = "flat")                  
+        but ["command"] = self.load
+        but.place(x=px,y=py)
+        
+    def load(self):
+        self.new()
+        selectPic = fd.askopenfilename(title="")
+        img = Image.open(selectPic)
+        pic1 = ImageTk.PhotoImage(img)
+        self.ca.image = pic1  # <--- keep reference of your image
+        self.ca.create_image(self.w / 2, self.h /2 , image=pic1)                # (0,0,anchor='nw',image=pic1) self.w-self.wDiff,self.h-self.hDiff
+        #self.ca.place(x=10, y=65)
+        
     def CreatSaveButton(self,rot,col,px,py):
         but = Button(rot, bg=col, text ="->]",  width=self.widthBu, height=2,relief = "flat")                  
         but ["command"] = self.save
@@ -106,6 +136,20 @@ class MainWin ():
         ps = self.ca.postscript(colormode='color')
         img = Image.open(io.BytesIO(ps.encode('utf-8')))
         img.save(self.picturePath + 'Mali_' + datetime.datetime.now().strftime('%Y%m%d%H%M%S') + '.jpg')
+    
+    def AutoSize(self,pic):
+        sizeOrig = pic.size
+        print(sizeOrig)
+        picVerh = sizeOrig[1] / sizeOrig[0]
+        print(picVerh)
+        if sizeOrig[0] > sizeOrig[1]:
+            print("A: ",int(self.w-self.wDiff * picVerh))
+            picAuto = pic.resize((int(self.h-self.wDiff), int(self.h-self.wDiff * picVerh)))
+        else:
+            print("B")
+            picAuto = pic.resize((int(self.w-self.hDiff / picVerh),self.w-self.hDiff))
+        print(picAuto.size)
+        return picAuto
         
     def CreatCloseButton(self,rot,col,px,py):
         but = Button(rot, bg=col, text ="X", width=self.widthBu, height=2,relief = "flat")                  
@@ -120,12 +164,13 @@ class MainWin ():
 #                           Main
 #   ********************************************************************
 
-def main(args):
+def main():#(args):
     mainWindow = MainWin()
     mainWindow = mainWindow.CreatGui()
     mainWindow.mainloop()
     return 0
 
 if __name__ == '__main__':
-    import sys
-    sys.exit(main(sys.argv))
+    #import sys
+    #sys.exit(main(sys.argv))
+    main()
