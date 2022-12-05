@@ -41,7 +41,7 @@ class MainWin ():
         self.mainTitle = "Mali"
         self.picturePath = ""                               # Insert Path to store the Picture
         self.w = self.win.winfo_screenwidth()
-        self.h = self.win.winfo_screenheight() 
+        self.h = self.win.winfo_screenheight() - 20 
         self.wDiff = 80
         self.hDiff = 150
         self.winSizeMain = str(self.w) + "x" + str(self.h)
