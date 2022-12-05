@@ -137,19 +137,6 @@ class MainWin ():
         img = Image.open(io.BytesIO(ps.encode('utf-8')))
         img.save(self.picturePath + 'Mali_' + datetime.datetime.now().strftime('%Y%m%d%H%M%S') + '.jpg')
     
-    def AutoSize(self,pic):
-        sizeOrig = pic.size
-        print(sizeOrig)
-        picVerh = sizeOrig[1] / sizeOrig[0]
-        print(picVerh)
-        if sizeOrig[0] > sizeOrig[1]:
-            print("A: ",int(self.w-self.wDiff * picVerh))
-            picAuto = pic.resize((int(self.h-self.wDiff), int(self.h-self.wDiff * picVerh)))
-        else:
-            print("B")
-            picAuto = pic.resize((int(self.w-self.hDiff / picVerh),self.w-self.hDiff))
-        print(picAuto.size)
-        return picAuto
         
     def CreatCloseButton(self,rot,col,px,py):
         but = Button(rot, bg=col, text ="X", width=self.widthBu, height=2,relief = "flat")                  
