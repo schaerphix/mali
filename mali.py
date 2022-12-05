@@ -65,7 +65,7 @@ class MainWin ():
         self.win.geometry(self.winSizeMain)
         self.win.title(self.mainTitle)
         self.winBg = self.win.tk_setPalette(self.bg)
-        self.win.overrideredirect(True)
+        #self.win.overrideredirect(True)
         self.win.iconphoto(False, PhotoImage(file='mali.png'))
         
         self.CreatCanvas(self.win,self.w-self.wDiff,self.h-self.hDiff,self.white,10,65)
