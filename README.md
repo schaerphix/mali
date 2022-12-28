@@ -2,4 +2,12 @@
 Painting app for kids
 
 First Steps after installation:
-- Add path to save the picture. Add the path at line 42  self.picturePath = "<your path>"
+- update the mali_ini.py file
+  - mali_save_path: add the path to save the drawings
+  - mali_open_path: add the path to othe folder to open pictures
+  
+
+
+
+            mali_screenshot.png
+          
