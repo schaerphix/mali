@@ -7,7 +7,5 @@ First Steps after installation:
   - mali_open_path: add the path to othe folder to open pictures
   
 
-
-
-            mali_screenshot.png
+mali_screenshot.png
           
